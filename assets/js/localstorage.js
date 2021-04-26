@@ -12,7 +12,7 @@ const getAllNotes = () => {
 const getNote = (noteId) => {
   const notes = getAllNotes();
   const match = notes.filter((note) => note.id === noteId);
-  return match[0];
+  return new Note(match[0].title, match[0].body, match[0].id);
 };
 
 const getIndexOfNote = (noteId) => {
@@ -34,6 +34,11 @@ const setupNotesItem = () => {
 };
 
 const saveEmptyNotesArray = () => {
-  const notesArr = JSON.stringify([]);
-  getDb().setItem('notes', notesArr);
+  const notesArr = [];
+  saveAllNotes(notesArr);
 };
+
+const saveAllNotes = (notesArr) => {
+  const notesString = JSON.stringify(notesArr);
+  getDb().setItem('notes', notesString);
+}

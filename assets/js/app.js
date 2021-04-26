@@ -1,6 +1,7 @@
 const initializeListeners = () => {
   getNoteModal().addEventListener('show.bs.modal', (event) => initNoteModal(event));
   getNoteModalSaveButton().addEventListener('click', (event) => saveNote(event));
+  getDeleteNoteButton().addEventListener('click', (event) => destroyNote(event));
 };
 
 const initializeTooltips = () => {

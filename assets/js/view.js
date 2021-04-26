@@ -1,10 +1,10 @@
 const initializeNotesView = () => {
   getAllNotes().forEach(note => {
-    prependNote( new Note(note.title, note.body, note.id) );
+    prependNoteToView( new Note(note.title, note.body, note.id) );
   });
 };
 
-const prependNote = (note) => {
+const prependNoteToView = (note) => {
   const notesContainer = document.getElementById('notes_container');
   notesContainer.prepend( note.toHTML() );
 };
@@ -12,4 +12,9 @@ const prependNote = (note) => {
 const updateNoteView = (note) => {
   const el = document.getElementById(note.id);
   el.innerHTML = note.toHTML().innerHTML;
+};
+
+const removeNoteFromView = (note) => {
+  const el = document.getElementById(note.id);
+  el.remove();
 };

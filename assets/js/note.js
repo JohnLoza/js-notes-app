@@ -9,7 +9,7 @@ class Note {
     this.id = generateHash();
     const notes = getAllNotes();
     notes.push(this);
-    getDb().setItem('notes', JSON.stringify(notes));
+    saveAllNotes(notes);
     return true;
   }
 
@@ -17,7 +17,13 @@ class Note {
     const notes = getAllNotes();
     const i = getIndexOfNote(this.id);
     notes[i] = this;
-    getDb().setItem('notes', JSON.stringify(notes));
+    saveAllNotes(notes);
+    return true;
+  }
+
+  destroy() {
+    const notes = getAllNotes().filter((note) => note.id != this.id);
+    saveAllNotes(notes);
     return true;
   }
 
@@ -31,7 +37,10 @@ class Note {
       <button class="btn btn-primary btn-sm d-none" data-bs-toggle="modal"
               data-bs-target="#note_modal" data-action="editNote" data-note-id="${this.id}">Edit</button>
     `;
-    noteNode.addEventListener('click', (event) => event.target.querySelector('[data-bs-toggle="modal"]').click() );
+    noteNode.addEventListener('click', (event) => {
+      const button = event.target.querySelector('[data-bs-toggle="modal"]');
+      if (button) button.click();
+    });
 
     return noteNode;
   }
@@ -52,8 +61,7 @@ const saveNewNote = () => {
   if ( newNote.save() ) {
     console.log('-> note saved: ', newNote);
     cleanNoteModal();
-    closeNoteModal();
-    prependNote(newNote);
+    prependNoteToView(newNote);
   } else {
     //TODO add error message?
   }
@@ -64,9 +72,19 @@ const updateNote = (noteId) => {
   if ( note.update() ) {
     console.log('-> note updated: ', note);
     cleanNoteModal();
-    closeNoteModal();
     updateNoteView(note);
   }
-}
+};
+
+const destroyNote = (event) => {
+  const noteId = event.target.dataset.noteId;
+  const note = getNote(noteId);
+
+  if ( note.destroy() ) {
+    console.log('-> deleted note: ', note);
+    cleanNoteModal();
+    removeNoteFromView(note);
+  }
+};
 
 const generateHash = () => Math.random().toString(36).substr(2);
