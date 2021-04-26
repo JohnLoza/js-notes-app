@@ -1,3 +1,5 @@
+// initialize the note modal form based on
+// if it's a new note or edit an existing one
 const initNoteModal = (event) => {
   const button = event.relatedTarget;
   if (button.dataset.action === 'newNote') {
@@ -8,12 +10,14 @@ const initNoteModal = (event) => {
   setTimeout(() => document.getElementById('note_title').focus(), 500);
 };
 
+// Setup the modal form for a new note
 const setupNewNoteModal = () => {
   getNoteModalTitle().textContent = "Nueva Nota";
   getNoteModalSaveButton().dataset.action = "newNote";
   hideDeleteNoteButton();
 };
 
+// Setup the modal form to edit an existing note
 const setupEditNoteModal = (noteId) => {
   const note = getNote(noteId);
   getNoteModalTitle().textContent = note.title;
@@ -24,6 +28,7 @@ const setupEditNoteModal = (noteId) => {
   showDeleteNoteButton(noteId);
 };
 
+// Clean the note modal and fields
 const cleanNoteModal = () => {
   getNoteModalTitle().textContent = '';
   getNoteTitleInput().value = '';
@@ -35,16 +40,14 @@ const cleanNoteModal = () => {
     delete getNoteModalSaveButton().dataset.noteId;
 };
 
-const closeNoteModal = () => {
-  getNoteModal().querySelector('[data-bs-dismiss="modal"]').click();
-};
-
+// Show delete note button on modal
 const showDeleteNoteButton = (noteId) => {
   const btn = getDeleteNoteButton();
   btn.classList.remove('d-none');
   btn.dataset.noteId = noteId;
 };
 
+// Hide delete note button on modal
 const hideDeleteNoteButton = (noteId) => {
   const btn = getDeleteNoteButton();
   btn.classList.add('d-none');

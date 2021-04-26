@@ -5,6 +5,7 @@ class Note {
     this.body = body;
   }
 
+  // Push current note to notes array
   save() {
     this.id = generateHash();
     const notes = getAllNotes();
@@ -13,6 +14,7 @@ class Note {
     return true;
   }
 
+  // Update current note
   update() {
     const notes = getAllNotes();
     const i = getIndexOfNote(this.id);
@@ -21,12 +23,14 @@ class Note {
     return true;
   }
 
+  // Destroy current note
   destroy() {
     const notes = getAllNotes().filter((note) => note.id != this.id);
     saveAllNotes(notes);
     return true;
   }
 
+  // Parse current note to an HTML element
   toHTML() {
     const noteNode = document.createElement('div');
     noteNode.id = this.id;
@@ -46,6 +50,8 @@ class Note {
   }
 };
 
+// Determine if a new note is going to be saved,
+// or update an existing one
 const saveNote = (event) => {
   const action = event.target.dataset.action;
   if (action === 'newNote') {
@@ -56,6 +62,7 @@ const saveNote = (event) => {
   }
 };
 
+// Save a new note in localStorage
 const saveNewNote = () => {
   const newNote = new Note(getNoteTitleInput().value, getNoteBodyInput().value);
   if ( newNote.save() ) {
@@ -67,6 +74,7 @@ const saveNewNote = () => {
   }
 };
 
+// Update a note in localStorage
 const updateNote = (noteId) => {
   const note = new Note(getNoteTitleInput().value, getNoteBodyInput().value, noteId);
   if ( note.update() ) {
@@ -76,6 +84,7 @@ const updateNote = (noteId) => {
   }
 };
 
+// Destroy a note in localStorage
 const destroyNote = (event) => {
   const noteId = event.target.dataset.noteId;
   const note = getNote(noteId);
