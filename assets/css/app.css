@@ -1,0 +1,12 @@
+body, html {
+  background-color: #fcf2ff;
+  margin-bottom: 5em;
+}
+
+.note {
+  margin: 1em;
+}
+
+.pointer {
+  cursor: pointer;
+}
