@@ -5,6 +5,11 @@ body, html {
 
 .note {
   margin: 1em;
+  justify-content: space-between;
+}
+
+.note .title, .note .body {
+  pointer-events: none;
 }
 
 .pointer {

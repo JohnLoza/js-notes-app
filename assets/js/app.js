@@ -3,8 +3,16 @@ const initializeListeners = () => {
   getNoteModalSaveButton().addEventListener('click', (event) => saveNote(event));
 };
 
+const initializeTooltips = () => {
+  const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+  const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl)
+  });
+};
+
 document.addEventListener('DOMContentLoaded', (event) => {
   initializeLocalStorarge();
   initializeListeners();
   initializeNotesView();
+  initializeTooltips();
 });

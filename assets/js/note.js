@@ -24,15 +24,14 @@ class Note {
   toHTML() {
     const noteNode = document.createElement('div');
     noteNode.id = this.id;
-    noteNode.className = 'note card card-body col-lg-3 col-12';
+    noteNode.className = 'note pointer card card-body col-lg-3 col-12';
     noteNode.innerHTML = `
       <h3 class="text-center title">${this.title}</h3>
-      <p class="body">${this.body}</p>
-      <button class="btn btn-primary btn-sm" data-bs-toggle="modal"
-              data-bs-target="#note_modal" data-action="editNote" data-note-id="${this.id}">
-        Edit
-      </button>
+      <p class="body">${this.body.replaceAll('\n', '<br>')}</p>
+      <button class="btn btn-primary btn-sm d-none" data-bs-toggle="modal"
+              data-bs-target="#note_modal" data-action="editNote" data-note-id="${this.id}">Edit</button>
     `;
+    noteNode.addEventListener('click', (event) => event.target.querySelector('[data-bs-toggle="modal"]').click() );
 
     return noteNode;
   }
